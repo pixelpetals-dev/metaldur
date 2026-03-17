@@ -7,5 +7,10 @@
         "casbin/casbin": "^3.0",
         "symfony/security-csrf": "^6.0",
         "symfony/http-foundation": "^6.0"
+    },
+    "config": {
+        "platform": {
+            "php": "8.2.30"
+        }
     }
 }
