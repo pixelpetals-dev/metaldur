@@ -1,9 +1,10 @@
 FROM php:8.2-apache
 
-# Install PHP extensions
+# Install PHP extensions and curl for health check
 RUN apt-get update && apt-get install -y \
     libzip-dev \
     unzip \
+    curl \
     && docker-php-ext-install pdo pdo_mysql zip bcmath \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
@@ -29,5 +30,8 @@ RUN if [ -f /var/www/html/composer.json ]; then cd /var/www/html && composer ins
 
 # Set permissions
 RUN chown -R www-data:www-data /var/www/html
+
+HEALTHCHECK --interval=10s --timeout=3s --start-period=10s --retries=3 \
+    CMD curl -f http://localhost/ || exit 1
 
 EXPOSE 80

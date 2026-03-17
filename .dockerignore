@@ -1,2 +1,5 @@
 .git
 .claude
+vendor
+node_modules
+*.md
