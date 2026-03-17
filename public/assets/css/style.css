@@ -1,0 +1,217 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;700&family=Oswald:wght@400;500;700&display=swap');
+
+:root {
+    /* --- BRAND PALETTE --- */
+    
+    /* Primary Background (The requested Hex) */
+    --metaldur-dark: #114470; 
+    
+    /* Lighter Shade for Gradients (Derived from #114470) */
+    --metaldur-light: #1a6096;
+    
+    /* Action Blue (Bright for buttons/hovers) */
+    --metaldur-blue: #3b82f6; 
+    
+    /* Logo Color (Used for text accents and borders) */
+    --metaldur-white: #e0eaef;
+
+    /* --- GLASS SETTINGS --- */
+    /* Borders use the Logo Color with opacity */
+    --glass-border: rgba(224, 234, 239, 0.25);
+    
+    /* Background uses the Brand Blue with opacity */
+    --glass-bg: rgba(17, 68, 112, 0.5); 
+}
+
+body {
+    background-color: var(--metaldur-dark);
+    /* Radial gradient to create a "spotlight" effect from the top, making it brighter */
+    background-image: radial-gradient(circle at 50% -20%, var(--metaldur-light) 0%, var(--metaldur-dark) 80%);
+    background-attachment: fixed;
+    font-family: 'Manrope', sans-serif;
+    color: white;
+    margin: 0;
+    overflow-x: hidden;
+    min-height: 100vh;
+}
+
+h1, h2, h3, .brand-font {
+    font-family: 'Oswald', sans-serif;
+    text-transform: uppercase;
+    /* Optional: Use the logo color for headings to tie it together */
+    color: white; 
+}
+
+/* --- NAVIGATION --- */
+.glass-nav {
+    background: rgba(17, 68, 112, 0.7); /* Brand Blue at 70% */
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--glass-border);
+    transition: all 0.3s ease;
+}
+
+/* --- UTILITIES --- */
+.group:hover .group-hover\:visible {
+    visibility: visible;
+}
+.group:hover .group-hover\:opacity-100 {
+    opacity: 1;
+}
+.group:hover .group-hover\:translate-y-0 {
+    transform: translateY(0);
+}
+
+#mobile-menu {
+    z-index: 100;
+}
+
+/* --- GLASS PANELS (Cards) --- */
+.glass-panel {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+}
+
+.glass-panel:hover {
+    border-color: rgba(224, 234, 239, 0.6); /* Logo color highlight */
+    background: rgba(26, 96, 150, 0.5); /* Lighter blue on hover */
+    transform: translateY(-2px);
+}
+
+/* --- 3D CANVAS --- */
+#canvas-container {
+    position: fixed;
+    top: 0; 
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 0;
+    pointer-events: none;
+}
+
+#tool-canvas {
+    position: relative;
+    width: 100%;
+    z-index: 20; 
+    touch-action: none; 
+}
+
+#tool-canvas canvas {
+    outline: none;
+    display: block;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+/* --- PRODUCT ICONS --- */
+.product-icon-circle {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 1.5rem;
+    border-radius: 50%;
+    
+    /* Gradient using Logo Color (light) and Brand Blue (dark) */
+    background: linear-gradient(145deg, rgba(224, 234, 239, 0.15), rgba(17, 68, 112, 0.3));
+    border: 1px solid var(--glass-border);
+    
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.group:hover .product-icon-circle {
+    border-color: var(--metaldur-white); /* Logo Color */
+    background: rgba(59, 130, 246, 0.2); /* Action Blue Tint */
+    box-shadow: 0 0 30px rgba(59, 130, 246, 0.3), inset 0 0 20px rgba(59, 130, 246, 0.1);
+    transform: translateY(-5px);
+}
+
+.product-svg {
+    width: 64px;
+    height: 64px;
+    transition: transform 0.4s ease;
+}
+
+.group:hover .product-svg {
+    transform: scale(1.1);
+}
+
+/* SVG Colors mapped to Brand */
+.product-svg .svg-body {
+    stroke: var(--metaldur-white); /* Logo Color #e0eaef */
+    stroke-width: 1.5;
+    fill: none;
+    transition: stroke 0.4s ease;
+}
+
+.product-svg .svg-accent {
+    stroke: var(--metaldur-blue); /* Bright Action Blue */
+    stroke-width: 2;
+    fill: rgba(59, 130, 246, 0.1);
+    transition: all 0.4s ease;
+}
+
+.group:hover .product-svg .svg-body {
+    stroke: #ffffff; /* Pure white on hover */
+}
+
+.group:hover .product-svg .svg-accent {
+    fill: rgba(59, 130, 246, 0.3);
+    filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.8));
+}
+
+.product-icon-circle.dashed {
+    border-style: dashed;
+}
+
+.group:hover .product-icon-circle.dashed {
+    border-style: solid;
+}
+
+/* --- PRELOADER --- */
+#preloader {
+    position: fixed; 
+    inset: 0; 
+    background: var(--metaldur-dark); /* #114470 */
+    z-index: 9999;
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+}
+
+.loader-line {
+    width: 0%; 
+    height: 2px; 
+    background: var(--metaldur-white); /* Logo color loader */
+    transition: width 0.5s ease;
+}
+
+.reveal-hero, .reveal-scroll { 
+    opacity: 0; 
+}
+
+.text-gradient {
+    /* Gradient text using White -> Logo Color */
+    background: linear-gradient(to right, #ffffff, var(--metaldur-white));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+main > section:first-of-type > div.relative.z-10 {
+    padding-top: 120px; /* Pushes text down below the ~96px header */
+}
+
+/* Optional: Adjust for mobile if needed */
+@media (max-width: 768px) {
+    main > section:first-of-type > div.relative.z-10 {
+        padding-top: 100px;
+    }
+}

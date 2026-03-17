@@ -1,0 +1,11 @@
+Header set X-Robots-Tag "noindex, nofollow, noarchive, nosnippet, noimageindex, nocache"
+
+Options -Indexes
+RewriteEngine On
+
+RewriteCond %{REQUEST_URI} ^/admin/super-admin/ [OR]
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+RewriteRule ^ index.php [L]

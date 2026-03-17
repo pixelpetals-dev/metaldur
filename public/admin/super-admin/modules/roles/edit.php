@@ -1,0 +1,84 @@
+<?php
+declare(strict_types=1);
+
+require_once __DIR__ . '/../../../bootstrap.php';
+require_once __DIR__ . '/../../session.php';
+
+rbac_guard('roles.edit');
+
+if ($id <= 0) {
+    http_response_code(404);
+    exit('Role not found');
+}
+
+$stmt = $pdo->prepare("SELECT name FROM roles WHERE id = ?");
+$stmt->execute([$id]);
+$role = $stmt->fetch(PDO::FETCH_ASSOC);
+
+if (!$role) {
+    http_response_code(404);
+    exit('Role not found');
+}
+
+$name = $role['name'];
+$error = '';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    csrf_guard();
+    $name = trim($_POST['name'] ?? '');
+
+    if ($name === '') {
+        $error = 'Role name is required.';
+    } else {
+        $stmt = $pdo->prepare("UPDATE roles SET name = :n WHERE id = :id");
+        $stmt->execute(['n' => $name, 'id' => $id]);
+        header("Location: /super-admin/roles?updated=1");
+        exit;
+    }
+}
+
+require_once SA_INCLUDES_PATH . '/header.php';
+
+function e($s){ return htmlspecialchars($s ?? '', ENT_QUOTES, 'UTF-8'); }
+?>
+
+<div class="row g-5 gx-xl-10 mb-5 mb-xl-10 mt-5">
+  <div id="kt_content_container" class="container-xxl">
+
+    <div class="card card-flush shadow-sm">
+      <div class="card-header py-5">
+        <h3 class="card-title fw-bold fs-3 mb-0">Edit Role</h3>
+      </div>
+
+      <form method="post" class="form">
+        <input type="hidden" name="_csrf" value="<?= csrf_token() ?>">
+
+        <div class="card-body">
+
+          <?php if ($error): ?>
+            <div class="alert alert-danger mb-7"><?= e($error) ?></div>
+          <?php endif; ?>
+
+          <div class="fv-row mb-7">
+            <label class="fs-6 fw-semibold mb-2">Role Name</label>
+            <input type="text"
+                   name="name"
+                   class="form-control form-control-solid"
+                   value="<?= e($name) ?>"
+                   required>
+          </div>
+
+        </div>
+
+        <div class="card-footer d-flex justify-content-end py-6 px-9">
+          <a href="/super-admin/roles" class="btn btn-light me-3">Cancel</a>
+          <button type="submit" class="btn btn-primary">Save Changes</button>
+        </div>
+
+      </form>
+    </div>
+
+  </div>
+</div>
+
+<?php require_once SA_INCLUDES_PATH . '/footer.php'; ?>
