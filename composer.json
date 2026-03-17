@@ -1,0 +1,11 @@
+{
+    "name": "metaldur/metaldur",
+    "description": "Metaldur - Precision Cutting Tools",
+    "require": {
+        "php": ">=8.1",
+        "phpmailer/phpmailer": "^6.9",
+        "casbin/casbin": "^3.0",
+        "symfony/security-csrf": "^6.0",
+        "symfony/http-foundation": "^6.0"
+    }
+}
