@@ -31,10 +31,10 @@ if ($secure) {
 ini_set('display_errors', '0');
 
 
-define('ROOT',             '/home/metaldur');
+define('ROOT',             getenv('APP_ROOT') ?: dirname(__DIR__, 2));
 define('CONFIG_PATH',      ROOT . '/config');
 define('SRC_PATH',         ROOT . '/src');
-define('PUBLIC_PATH',      ROOT . '/public_html/admin');
+define('PUBLIC_PATH',      ROOT . '/public/admin');
 define('SA_INCLUDES_PATH', PUBLIC_PATH . '/super-admin/includes');
 define('INCLUDES_PATH',    PUBLIC_PATH . '/includes');
 define('PHOTO_PATH',       PUBLIC_PATH . '/assets/media/users/');
