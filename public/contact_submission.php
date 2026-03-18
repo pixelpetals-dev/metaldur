@@ -21,10 +21,10 @@ if (time() - $submitTime < 2) {
     exit;
 }
 
-$name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING);
-$phone = filter_input(INPUT_POST, 'phone', FILTER_SANITIZE_STRING);
+$name = htmlspecialchars(trim($_POST['name'] ?? ''), ENT_QUOTES, 'UTF-8');
+$phone = htmlspecialchars(trim($_POST['phone'] ?? ''), ENT_QUOTES, 'UTF-8');
 $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
-$message = filter_input(INPUT_POST, 'message', FILTER_SANITIZE_STRING);
+$message = htmlspecialchars(trim($_POST['message'] ?? ''), ENT_QUOTES, 'UTF-8');
 
 if (!$name || !$email || !$message) {
     echo json_encode(['status' => 'error', 'message' => 'Invalid input details.']);
