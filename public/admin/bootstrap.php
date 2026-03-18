@@ -28,7 +28,8 @@ if ($secure) {
     header('Strict-Transport-Security: max-age=31536000; includeSubDomains; preload');
 }
 
-ini_set('display_errors', '0');
+ini_set('display_errors', getenv('APP_DEBUG') ? '1' : '0');
+ini_set('error_reporting', getenv('APP_DEBUG') ? (string)E_ALL : '0');
 
 
 define('ROOT',             getenv('APP_ROOT') ?: dirname(__DIR__, 2));
